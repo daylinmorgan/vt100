@@ -9,6 +9,7 @@ macro vt100Style*(arg: untyped): untyped =
   let code = arg[1]
   let completeCode = newLit("\e[" & $code.intVal & "m")
 
+  # TODO: skip reset if string ends with ansiReset
   result = quote do:
     proc `name`*(s: string): string = `completeCode` & s & ansiReset
 
@@ -23,4 +24,3 @@ macro vt100Styles*(body: untyped) =
       x
     ))
 
-export vt100Styles, vt100Style
